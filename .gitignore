@@ -1,0 +1,17 @@
+#
+myIdea.md
+client/node_modules/
+client/.eslintrc.js
+client/package-lock.json
+client/package.json
+client/tsconfig.json
+client/.browserslistrc
+client/src/shims-vue.d.ts
+client/README.md
+server/venv
+__pycache__/
+.idea/
+server/migrations/
+server/MySQL_backup
+server/logging
+#
