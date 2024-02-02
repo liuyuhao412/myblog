@@ -16,6 +16,7 @@ migrate = Migrate(application, db)
 
 log_file_directory = os.path.join(os.path.dirname(__file__), 'logging')
 log_file = os.path.join(log_file_directory, 'backup_log.txt')
+logging.basicConfig(filename=log_file, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 if not os.path.exists(log_file_directory):
@@ -51,7 +52,7 @@ def init_db():
 @cli.command("backup_db")
 def backup_db():
     backup_directory = 'MySQL_backup'
-    timestamp = datetime.now().strftime("%Y-%m-%d,%Hh%Mm%Ss")
+    timestamp = datetime.now().strftime("%Y-%m-%d-%Hh%Mm%Ss")
     backup_file = f'{backup_directory}/backup_{timestamp}.sql'
 
     # 检查目录是否存在
@@ -60,9 +61,6 @@ def backup_db():
         os.makedirs(backup_directory)
 
     try:
-        # 配置日志记录，使用绝对路径
-        logging.basicConfig(filename=log_file, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
         # 密码还需修改，有点安全性问题。
         command = [
             'mysqldump',
@@ -84,33 +82,33 @@ def backup_db():
 
 
 @cli.command("restore_db")
-def restore_db():
+def restore_db(backup_file_path=None):
     backup_directory = 'MySQL_backup'
 
-    # 确保备份文件存在
-    backup_file = f'{backup_directory}/backup.sql'
-    if not os.path.exists(backup_file):
-        print(f"备份文件 '{backup_file}' 不存在。请先执行备份操作。")
-        return
+    if backup_file_path is None:
+        all_backups = [f for f in os.listdir(backup_directory) if os.path.isfile(os.path.join(backup_directory, f))]
+        all_backups.sort(reverse=True)
+        if not all_backups:
+            print("没有找到备份文件。请先执行备份操作。")
+            return
+        backup_file_path = os.path.join(backup_directory, all_backups[0])
+
     try:
         # 密码还需修改，有点安全性问题。
         command = [
             'mysql',
-            '-u', f'{load_config().USERNAME}',
-            f'--password={load_config().PASSWORD}',
+            '--defaults-file=my.cnf',  # 指定配置文件
             f'{load_config().DATABASE}',
-            '<', backup_file
+            '<', backup_file_path
         ]
 
         # 在 Windows 上使用 CMD，Linux 上使用 Bash
         shell_command = command if platform.system() == 'Windows' else ' '.join(command)
         subprocess.run(shell_command, check=True, shell=True if platform.system() == 'Windows' else False)
-
-        print("还原成功完成。")
+        logging.info(f"还原成功完成。还原文件为 {backup_file_path}")
     except subprocess.CalledProcessError as e:
-        print(f"还原期间发生错误：{e}")
+        logging.error(f"备份期间发生错误：{e}")
 
 
 if __name__ == "__main__":
     cli()
-    # application.run()
