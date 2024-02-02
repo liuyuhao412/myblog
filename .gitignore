@@ -7,6 +7,7 @@ client/package.json
 client/tsconfig.json
 client/.browserslistrc
 client/src/shims-vue.d.ts
+client/vue.config.js
 client/README.md
 server/venv
 __pycache__/
