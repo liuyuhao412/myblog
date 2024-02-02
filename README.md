@@ -46,7 +46,11 @@
    ```
    npm install -g @vue/cli
    ```
-
+3. 安装相应的包
+   ```
+   npm install axios
+   npm install element-plus
+   ```
 
 #### 配置后端环境
 
