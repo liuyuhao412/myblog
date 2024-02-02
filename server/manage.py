@@ -66,8 +66,7 @@ def backup_db():
         # 密码还需修改，有点安全性问题。
         command = [
             'mysqldump',
-            '-u', f'{load_config().USERNAME}',
-            f'--password={load_config().PASSWORD}',
+            '--defaults-file=my.cnf',  # 指定配置文件
             f'{load_config().DATABASE}',
             '-r', backup_file
         ]
