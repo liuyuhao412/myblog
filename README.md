@@ -27,8 +27,7 @@
 |   |-- requirements.txt (项目依赖) 
 |   |-- /venv(运行环境)
 |-- .gitignore 
-|-- README.md 
-
+|-- README.md
 </pre>
 ## 操作步骤
 
