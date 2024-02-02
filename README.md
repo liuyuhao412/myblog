@@ -152,3 +152,4 @@
 - Flask 官方文档： [Flask](https://www.osgeo.cn/flask/)
 - Flask-SQLAlchemy 官方文档： [SQLAlchemy](http://www.pythondoc.com/flask-sqlalchemy/)
 - Flask-Migrate 官方文档： [Migrate](https://flask-migrate.readthedocs.io/en/latest/)
+- Element-Plus 官方文档：[Element-Plus](https://element-plus.org/zh-CN/)
