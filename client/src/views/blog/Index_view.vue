@@ -7,7 +7,4 @@
 <script lang="ts" setup>
 import NavigationVue from "@/components/NavigationVue.vue";
 </script>
-
-<style>
-
-</style>
+<style scoped></style>
