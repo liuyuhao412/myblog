@@ -35,7 +35,7 @@ const dialogTitle = ref<string>("");
 const login = (): void => {
   dialogVisible.value = true;
   dialogTitle.value = "登录";
-  console.log("登录成功")
+  console.log("登录成功");
   showLogin.value = false;
 };
 
