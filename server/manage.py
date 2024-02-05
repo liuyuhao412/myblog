@@ -15,8 +15,18 @@ cli = FlaskGroup(application)
 migrate = Migrate(application, db)
 
 log_file_directory = os.path.join(os.path.dirname(__file__), 'logging')
-log_file = os.path.join(log_file_directory, 'backup_log.txt')
-logging.basicConfig(filename=log_file, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+log_file_info = os.path.join(log_file_directory, 'info.log')
+log_file_error = os.path.join(log_file_directory, 'error.log')
+
+file_info = logging.FileHandler(log_file_info)
+file_info.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s', datefmt='%d/%b/%Y %H:%M:%S'))
+file_info.setLevel(logging.INFO)
+logging.getLogger().addHandler(file_info)
+
+file_error = logging.FileHandler(log_file_error)
+file_error.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s', datefmt='%d/%b/%Y %H:%M:%S'))
+file_error.setLevel(logging.ERROR)
+logging.getLogger().addHandler(file_error)
 
 
 if not os.path.exists(log_file_directory):
@@ -64,7 +74,7 @@ def backup_db():
         # 密码还需修改，有点安全性问题。
         command = [
             'mysqldump',
-            '--defaults-file=my.cnf',  # 指定配置文件
+            '--defaults-file=my1.cnf',  # 指定配置文件
             f'{load_config().DATABASE}',
             '-r', backup_file
         ]
