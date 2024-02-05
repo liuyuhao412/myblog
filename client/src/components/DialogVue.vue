@@ -4,7 +4,7 @@
     :title="''"
     :modal="true"
     :close-on-click-modal="false"
-    width="300px"
+    :width="dialogProps.loginWidth"
     :before-close="handleClose"
   >
     <template v-slot:header>
@@ -19,11 +19,12 @@ import { defineProps, defineEmits, ref, watch } from "vue";
 interface Props {
   title: string;
   modelValue: boolean;
+  loginWidth: string;
 }
 const dialogProps = defineProps<Props>();
 const emit = defineEmits(["update:modelValue"]);
 // 使用 ref 创建本地变量
-const localModelValue = ref(dialogProps.modelValue);
+const localModelValue = ref<boolean>(dialogProps.modelValue);
 
 // 在组件初始化时将 props 复制给本地变量
 watch(

@@ -12,7 +12,7 @@ def create_app():
     db.init_app(app)
 
     # 注册蓝图
-    from .views import blog_bp as blog_blueprint
+    from .views.blog_views import blog_bp as blog_blueprint
     app.register_blueprint(blog_blueprint)
 
     return app

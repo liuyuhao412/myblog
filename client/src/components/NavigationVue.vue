@@ -19,6 +19,7 @@
   </div>
   <DialogVue
     :title="title"
+    :loginWidth="loginWidth"
     v-model="modelValue"
     @update:modelValue="handleDialogClose"
   >
@@ -42,8 +43,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
 import DialogVue from "@/components/DialogVue.vue";
+import { LoginApi } from "@/api/login";
+import { ref } from "vue";
+import { ElMessage } from "element-plus";
+
 interface LoginForm {
   Username: string;
   Password: string;
@@ -54,6 +58,7 @@ const isMenuOpen = ref<boolean>(false);
 //登录弹窗
 const modelValue = ref<boolean>(false);
 const title = ref<string>("");
+const loginWidth = ref<string>("300px");
 const loginForm = ref<LoginForm>({
   Username: "",
   Password: "",
@@ -68,12 +73,20 @@ const handleDialogClose = (value: boolean): void => {
   modelValue.value = value;
 };
 
-const loginBtn = (): void => {
-  console.log("登录成功");
-  isLogin.value = false;
-  modelValue.value = false;
+const loginBtn = async (): Promise<void> => {
+  try {
+    const res = await LoginApi(loginForm.value);
+    if (res.data.code == 200) {
+      ElMessage({
+        message: res.data.msg,
+        type: "success",
+        duration: 1000,
+      });
+    }
+  } catch (error) {
+    console.error("Axios request failed:", error);
+  }
 };
-
 const exit = (): void => {
   isLogin.value = true;
 };
