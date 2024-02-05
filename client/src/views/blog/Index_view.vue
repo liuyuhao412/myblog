@@ -5,6 +5,6 @@
 </template>
 
 <script lang="ts" setup>
-import NavigationVue from "@/components/NavigationVue.vue";
+import NavigationVue from "@/views/blog/NavigationVue.vue";
 </script>
 <style scoped></style>

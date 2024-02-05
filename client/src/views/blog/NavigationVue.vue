@@ -74,6 +74,7 @@ const handleDialogClose = (value: boolean): void => {
 };
 
 const loginBtn = async (): Promise<void> => {
+  console.log(loginForm.value)
   try {
     const res = await LoginApi(loginForm.value);
     if (res.data.code == 200) {
