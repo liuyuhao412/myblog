@@ -6,7 +6,8 @@
     </div>
 
     <div class="header-item-right">
-      <div class="login-btn" @click="login" v-if="showLogin">登录</div>
+      <div class="login-btn" @click="login" v-if="isLogin">登录</div>
+      <div class="login-btn" @click="exit" v-if="!isLogin">退出</div>
       <input type="checkbox" v-model="isMenuOpen" class="menu" />
       <span class="iconfont menu-icon" @click="openMenu">&#xe609;</span>
       <div class="nav-menu" :class="{ open: isMenuOpen }">
@@ -16,27 +17,65 @@
       </div>
     </div>
   </div>
-  <DialogVue :dialogTitle="dialogTitle" v-model="dialogVisible">
-    <el-input placeholder="请输入用户名" />
-    <el-input placeholder="密码在此完成" />
-    <el-button type="info">登录</el-button>
+  <DialogVue
+    :title="title"
+    v-model="modelValue"
+    @update:modelValue="handleDialogClose"
+  >
+    <el-form :model="loginForm">
+      <el-input
+        v-model="loginForm.Username"
+        placeholder="请输入用户名"
+        class="login-input"
+      />
+      <el-input
+        v-model="loginForm.Password"
+        placeholder="密码在此完成"
+        type="password"
+        class="login-input"
+      />
+      <el-button type="info" class="ok-btn" @click="loginBtn"
+        >登录</el-button
+      ></el-form
+    >
   </DialogVue>
 </template>
 
 <script lang="ts" setup>
 import { ref } from "vue";
 import DialogVue from "@/components/DialogVue.vue";
-const showLogin = ref<boolean>(true);
+interface LoginForm {
+  Username: string;
+  Password: string;
+}
+
+const isLogin = ref<boolean>(true);
 const isMenuOpen = ref<boolean>(false);
 //登录弹窗
-const dialogVisible = ref<boolean>(false);
-const dialogTitle = ref<string>("");
+const modelValue = ref<boolean>(false);
+const title = ref<string>("");
+const loginForm = ref<LoginForm>({
+  Username: "",
+  Password: "",
+});
 
 const login = (): void => {
-  dialogVisible.value = true;
-  dialogTitle.value = "登录";
+  modelValue.value = true;
+  title.value = "登录";
+};
+
+const handleDialogClose = (value: boolean): void => {
+  modelValue.value = value;
+};
+
+const loginBtn = (): void => {
   console.log("登录成功");
-  showLogin.value = false;
+  isLogin.value = false;
+  modelValue.value = false;
+};
+
+const exit = (): void => {
+  isLogin.value = true;
 };
 
 const openMenu = (): void => {
@@ -64,7 +103,7 @@ const closeMenu = (): void => {
 .header-item-left {
   display: flex;
   align-items: center;
-  margin-left: 1rem;
+  margin-left: 3rem;
 }
 
 .logo {
@@ -88,6 +127,19 @@ const closeMenu = (): void => {
   padding: 4px 12px;
   border-radius: 5px;
   margin-right: 1rem;
+}
+
+.login-input {
+  height: 40px;
+  width: 200px;
+  margin-left: 30px;
+  margin-bottom: 30px;
+}
+.ok-btn {
+  height: 40px;
+  width: 120px;
+  margin-left: 60px;
+  margin-bottom: 10px;
 }
 
 .menu {
