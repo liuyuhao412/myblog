@@ -8,19 +8,19 @@
     <div class="header-item-right">
       <div class="item-div">
         <span class="iconfont item-div-icon">&#xe646;</span>
-        <router-link to="/home" class="router-link">主页</router-link>
+        <router-link to="/index_home" class="router-link">主页</router-link>
       </div>
       <div class="item-div" v-if="!isLogin">
         <span class="iconfont item-div-icon">&#xe601;</span>
-        <router-link to="/home" class="router-link">分类</router-link>
+        <router-link to="/index_home" class="router-link">分类</router-link>
       </div>
       <div class="item-div" v-if="!isLogin">
         <span class="iconfont item-div-icon">&#xe608;</span>
-        <router-link to="/home" class="router-link">说说</router-link>
+        <router-link to="/index_home" class="router-link">说说</router-link>
       </div>
       <div class="item-div" v-if="!isLogin">
         <span class="iconfont item-div-icon">&#xe614;</span>
-        <router-link to="/home" class="router-link">我的</router-link>
+        <router-link to="/index_home" class="router-link">我的</router-link>
       </div>
       <div class="login-btn" @click="login" v-if="isLogin">登录</div>
       <div class="login-btn" @click="exit" v-if="!isLogin">退出</div>
@@ -96,7 +96,7 @@ const loginBtn = async (): Promise<void> => {
       modelValue.value = false;
       loginForm.value.Username = "";
       loginForm.value.Password = "";
-      router.push({ path: "/home" });
+      router.push({ path: "/index_home" });
     } else {
       ElMessage({
         message: res.data.msg,
