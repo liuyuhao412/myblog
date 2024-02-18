@@ -157,7 +157,7 @@ const closeMenu = (): void => {
 .header-item-left {
   display: flex;
   align-items: center;
-  margin-left: 3rem;
+  margin-left: 6rem;
 }
 
 .logo {
@@ -171,7 +171,7 @@ const closeMenu = (): void => {
 .header-item-right {
   display: flex;
   align-items: center;
-  margin-right: 1rem;
+  margin-right: 6rem;
 }
 .login-btn {
   cursor: pointer;
@@ -207,6 +207,7 @@ const closeMenu = (): void => {
 
 .nav-menu {
   display: none;
+  margin-right: 4rem;
 }
 
 .nav-menu.open {
@@ -237,6 +238,15 @@ const closeMenu = (): void => {
 }
 
 /* 添加媒体查询，适应小屏幕 */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 500px) {
+  .header-item-left {
+    margin-left: 1rem;
+  }
+  .header-item-right {
+    margin-right: 1rem;
+  }
+  .nav-menu {
+    margin-right: 0rem;
+  }
 }
 </style>
