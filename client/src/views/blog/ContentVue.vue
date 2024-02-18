@@ -11,12 +11,4 @@
   width: 1200px;
   margin: 0 auto;
 }
-
-@media screen and (max-width: 500px) {
-  .wrapper {
-    background-color: #ffffff;
-    width: 90vw;
-    padding: 0 auto;
-  }
-}
 </style>

@@ -26,6 +26,6 @@ import ContentVue from "@/views/blog/ContentVue.vue";
 }
 .content {
   flex: 1;
-  margin-top: 50px;
+  margin-top: 52px;
 }
 </style>

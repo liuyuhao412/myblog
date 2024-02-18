@@ -19,16 +19,6 @@ const routes: Array<RouteRecordRaw> = [
         name: "home",
         component: () => import('@/views/blog/index_home.vue'),
       },
-      {
-        path: "/community",
-        name: "community",
-        component: () => import('@/views/blog/index_community.vue'),
-      },
-      {
-        path: "/my_info",
-        name: "my_info",
-        component: () => import('@/views/blog/index_my_info.vue'),
-      },
     ]
   }
 ]

@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4431092 */
-  src: url('../iconfont/iconfont.woff2?t=1707014404584') format('woff2'),
-       url('../iconfont/iconfont.woff?t=1707014404584') format('woff'),
-       url('../iconfont/iconfont.ttf?t=1707014404584') format('truetype');
+  src: url('../iconfont/iconfont.woff2?t=1708246025272') format('woff2'),
+       url('../iconfont/iconfont.woff?t=1708246025272') format('woff'),
+       url('../iconfont/iconfont.ttf?t=1708246025272') format('truetype');
 }
 
 .iconfont {
@@ -13,12 +13,20 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-caidan:before {
-  content: "\e64f";
+.icon-shuoshuo:before {
+  content: "\e608";
 }
 
-.icon-caidan1:before {
-  content: "\e609";
+.icon-mine:before {
+  content: "\e614";
+}
+
+.icon-home-g:before {
+  content: "\e646";
+}
+
+.icon-fenlei:before {
+  content: "\e601";
 }
 
 .icon-boke1:before {

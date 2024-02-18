@@ -6,25 +6,24 @@
     </div>
 
     <div class="header-item-right">
+      <div class="item-div">
+        <span class="iconfont item-div-icon">&#xe646;</span>
+        <router-link to="/home" class="router-link">主页</router-link>
+      </div>
+      <div class="item-div" v-if="!isLogin">
+        <span class="iconfont item-div-icon">&#xe601;</span>
+        <router-link to="/home" class="router-link">分类</router-link>
+      </div>
+      <div class="item-div" v-if="!isLogin">
+        <span class="iconfont item-div-icon">&#xe608;</span>
+        <router-link to="/home" class="router-link">说说</router-link>
+      </div>
+      <div class="item-div" v-if="!isLogin">
+        <span class="iconfont item-div-icon">&#xe614;</span>
+        <router-link to="/home" class="router-link">我的</router-link>
+      </div>
       <div class="login-btn" @click="login" v-if="isLogin">登录</div>
       <div class="login-btn" @click="exit" v-if="!isLogin">退出</div>
-      <input type="checkbox" v-model="isMenuOpen" class="menu" />
-      <span class="iconfont menu-icon" @click="openMenu">&#xe609;</span>
-      <div class="nav-menu" :class="{ open: isMenuOpen }">
-        <router-link to="/home" class="nav-item" @click="closeMenu"
-          >首页</router-link
-        >
-        <router-link to="/community" class="nav-item" @click="closeMenu"
-          >社区</router-link
-        >
-        <router-link
-          to="/my_info"
-          class="nav-item"
-          @click="closeMenu"
-          v-if="!isLogin"
-          >我的</router-link
-        >
-      </div>
     </div>
   </div>
   <DialogVue
@@ -66,7 +65,6 @@ interface LoginForm {
 
 const router = useRouter();
 const isLogin = ref<boolean>(true);
-const isMenuOpen = ref<boolean>(false);
 //登录弹窗
 const modelValue = ref<boolean>(false);
 const title = ref<string>("");
@@ -86,7 +84,6 @@ const handleDialogClose = (value: boolean): void => {
 };
 
 const loginBtn = async (): Promise<void> => {
-  console.log(loginForm.value);
   try {
     const res = await LoginApi(loginForm.value);
     if (res.data.code == 200) {
@@ -134,14 +131,6 @@ const exit = (): void => {
       });
     });
 };
-
-const openMenu = (): void => {
-  isMenuOpen.value = !isMenuOpen.value;
-};
-
-const closeMenu = (): void => {
-  isMenuOpen.value = !isMenuOpen.value;
-};
 </script>
 
 <style scoped>
@@ -157,32 +146,56 @@ const closeMenu = (): void => {
 .header-item-left {
   display: flex;
   align-items: center;
-  margin-left: 6rem;
+  margin-left: 60px;
 }
 
 .logo {
-  font-size: 24px;
+  font-size: 30px;
   margin-right: 10px;
 }
 
 .title {
-  font-size: 24px;
+  font-size: 28px;
 }
 .header-item-right {
   display: flex;
   align-items: center;
-  margin-right: 6rem;
+  margin-right: 20px;
 }
 .login-btn {
   cursor: pointer;
   background-color: #71d8b4;
-  color: #5f5a5a;
-  font-size: 16px;
-  padding: 4px 12px;
+  color: #000;
+  font-size: 18px;
+  padding: 6px 12px;
   border-radius: 5px;
-  margin-right: 1rem;
 }
 
+.login-btn:active {
+  color: #fcc6ab;
+}
+
+.item-div {
+  font-size: 18px;
+  color: #5f5a5a;
+  margin-right: 20px;
+  padding: 6px 12px;
+  border-radius: 5px;
+}
+.item-div:hover {
+  background-color: #71d8b4;
+}
+
+.router-link {
+  color: #000;
+}
+
+.item-div-icon {
+  font-size: 16px;
+  color: #000;
+  font-weight: bold;
+  margin-right: 5px;
+}
 .login-input {
   height: 40px;
   width: 200px;
@@ -194,59 +207,5 @@ const closeMenu = (): void => {
   width: 120px;
   margin-left: 60px;
   margin-bottom: 10px;
-}
-
-.menu {
-  display: none;
-}
-.menu-icon {
-  font-size: 24px;
-  cursor: pointer;
-  user-select: none; /* 禁用用户选中效果 */
-}
-
-.nav-menu {
-  display: none;
-  margin-right: 4rem;
-}
-
-.nav-menu.open {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 50px; /* 距离顶部的距离，根据实际需要调整 */
-  right: 10px;
-  background-color: #5f5a5a;
-  padding: 10px 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-  border-radius: 5px;
-}
-
-.nav-item {
-  margin-bottom: 10px;
-  cursor: pointer;
-  color: #fff;
-  font-size: 16px;
-}
-
-.nav-item:last-child {
-  margin-bottom: 0;
-}
-
-.nav-item:hover {
-  color: #ffd700;
-}
-
-/* 添加媒体查询，适应小屏幕 */
-@media screen and (max-width: 500px) {
-  .header-item-left {
-    margin-left: 1rem;
-  }
-  .header-item-right {
-    margin-right: 1rem;
-  }
-  .nav-menu {
-    margin-right: 0rem;
-  }
 }
 </style>
