@@ -11,9 +11,19 @@
       <input type="checkbox" v-model="isMenuOpen" class="menu" />
       <span class="iconfont menu-icon" @click="openMenu">&#xe609;</span>
       <div class="nav-menu" :class="{ open: isMenuOpen }">
-        <div class="nav-item" @click="closeMenu">首页</div>
-        <div class="nav-item" @click="closeMenu">社区</div>
-        <div class="nav-item" @click="closeMenu">我的</div>
+        <router-link to="/home" class="nav-item" @click="closeMenu"
+          >首页</router-link
+        >
+        <router-link to="/community" class="nav-item" @click="closeMenu"
+          >社区</router-link
+        >
+        <router-link
+          to="/my_info"
+          class="nav-item"
+          @click="closeMenu"
+          v-if="!isLogin"
+          >我的</router-link
+        >
       </div>
     </div>
   </div>
@@ -142,9 +152,6 @@ const closeMenu = (): void => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: fixed;
-  width: 100%;
-  top: 0;
 }
 
 .header-item-left {
