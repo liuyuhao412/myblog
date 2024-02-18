@@ -19,6 +19,10 @@
         <router-link to="/index_home" class="router-link">说说</router-link>
       </div>
       <div class="item-div" v-if="!isLogin">
+        <span class="iconfont item-div-icon">&#xe75b;</span>
+        <router-link to="/index_home" class="router-link">音乐</router-link>
+      </div>
+      <div class="item-div" v-if="!isLogin">
         <span class="iconfont item-div-icon">&#xe614;</span>
         <router-link to="/index_home" class="router-link">我的</router-link>
       </div>
@@ -167,7 +171,7 @@ const exit = (): void => {
   background-color: #71d8b4;
   color: #000;
   font-size: 18px;
-  padding: 6px 12px;
+  padding: 6px 16px;
   border-radius: 5px;
 }
 
