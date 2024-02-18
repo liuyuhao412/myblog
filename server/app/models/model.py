@@ -10,7 +10,6 @@ class User(db.Model):
     Password = db.Column(db.String(255), nullable=False)
     Email = db.Column(db.String(255), unique=True, nullable=False)
     ProfilePicture = db.Column(db.String(255))
-    Bio = db.Column(db.Text)
     CreatedAt = db.Column(db.DateTime, default=datetime.utcnow)
     UpdatedAt = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 

@@ -15,18 +15,16 @@ cli = FlaskGroup(application)
 migrate = Migrate(application, db)
 
 log_file_directory = os.path.join(os.path.dirname(__file__), 'logging')
-log_file_info = os.path.join(log_file_directory, 'info.log')
-log_file_error = os.path.join(log_file_directory, 'error.log')
-
+log_file_info = os.path.join(log_file_directory, 'manage.log')
 file_info = logging.FileHandler(log_file_info)
 file_info.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s', datefmt='%d/%b/%Y %H:%M:%S'))
-file_info.setLevel(logging.INFO)
-logging.getLogger().addHandler(file_info)
 
-file_error = logging.FileHandler(log_file_error)
-file_error.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s', datefmt='%d/%b/%Y %H:%M:%S'))
-file_error.setLevel(logging.ERROR)
-logging.getLogger().addHandler(file_error)
+if not logging.getLogger().handlers:
+    # 添加日志处理器到根日志对象
+    logging.getLogger().addHandler(file_info)
+
+    # 设置根日志级别
+    logging.getLogger().setLevel(logging.DEBUG)
 
 
 if not os.path.exists(log_file_directory):
@@ -56,7 +54,8 @@ def init_db():
     """初始化数据库"""
     db.drop_all()
     db.create_all()
-    print("Database initialized.")
+    logging.info(f"数据库初始化成功")
+    print("数据库初始化成功")
 
 
 @cli.command("backup_db")
@@ -84,6 +83,7 @@ def backup_db():
         subprocess.run(shell_command, check=True, shell=True if platform.system() == 'Windows' else False)
 
         logging.info(f"备份成功完成。文件保存在 {backup_file}")
+        print("备份成功完成")
         # 在备份后添加文件清理逻辑
         cleanup_old_backups(backup_directory)
 
@@ -116,6 +116,7 @@ def restore_db(backup_file_path=None):
         shell_command = command if platform.system() == 'Windows' else ' '.join(command)
         subprocess.run(shell_command, check=True, shell=True if platform.system() == 'Windows' else False)
         logging.info(f"还原成功完成。还原文件为 {backup_file_path}")
+        print("还原成功完成")
     except subprocess.CalledProcessError as e:
         logging.error(f"备份期间发生错误：{e}")
 

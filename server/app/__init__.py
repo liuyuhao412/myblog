@@ -7,7 +7,6 @@ def create_app():
     app = Flask(__name__)
     # 加载配置
     app.config.from_object(load_config())
-
     # 初始化数据库
     db.init_app(app)
 

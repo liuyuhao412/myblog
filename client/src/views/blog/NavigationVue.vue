@@ -46,13 +46,15 @@
 import DialogVue from "@/components/DialogVue.vue";
 import { LoginApi } from "@/api/login";
 import { ref } from "vue";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
+import { useRouter } from "vue-router";
 
 interface LoginForm {
   Username: string;
   Password: string;
 }
 
+const router = useRouter();
 const isLogin = ref<boolean>(true);
 const isMenuOpen = ref<boolean>(false);
 //登录弹窗
@@ -74,7 +76,7 @@ const handleDialogClose = (value: boolean): void => {
 };
 
 const loginBtn = async (): Promise<void> => {
-  console.log(loginForm.value)
+  console.log(loginForm.value);
   try {
     const res = await LoginApi(loginForm.value);
     if (res.data.code == 200) {
@@ -83,13 +85,44 @@ const loginBtn = async (): Promise<void> => {
         type: "success",
         duration: 1000,
       });
+      isLogin.value = false;
+      modelValue.value = false;
+      loginForm.value.Username = "";
+      loginForm.value.Password = "";
+      router.push({ path: "/home" });
+    } else {
+      ElMessage({
+        message: res.data.msg,
+        type: "error",
+        duration: 1000,
+      });
     }
   } catch (error) {
     console.error("Axios request failed:", error);
   }
 };
 const exit = (): void => {
-  isLogin.value = true;
+  ElMessageBox.confirm("您确认要退出吗？", "提示", {
+    cancelButtonText: "取消",
+    confirmButtonText: "确认",
+    type: "warning",
+  })
+    .then(() => {
+      ElMessage({
+        type: "success",
+        message: "退出成功",
+        duration: 1000,
+      });
+      isLogin.value = true;
+      router.push({ path: "/index" });
+    })
+    .catch(() => {
+      ElMessage({
+        type: "info",
+        message: "取消退出",
+        duration: 1000,
+      });
+    });
 };
 
 const openMenu = (): void => {
