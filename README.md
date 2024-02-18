@@ -157,5 +157,6 @@
 - Flask 官方文档： [Flask](https://www.osgeo.cn/flask/)
 - Flask-SQLAlchemy 官方文档： [SQLAlchemy](http://www.pythondoc.com/flask-sqlalchemy/)
 - Flask-Migrate 官方文档： [Migrate](https://flask-migrate.readthedocs.io/en/latest/)
+- Vue 官方文档：[Vue](https://cn.vuejs.org/)
 - Element-Plus 官方文档：[Element-Plus](https://element-plus.org/zh-CN/)
 - Editor.md 官方文档：[Editor.md](https://pandao.github.io/editor.md/)
