@@ -12,19 +12,19 @@
       </div>
       <div class="item-div" v-if="!isLogin">
         <span class="iconfont item-div-icon">&#xe601;</span>
-        <router-link to="/index_home" class="router-link">分类</router-link>
+        <router-link to="/index_class" class="router-link">分类</router-link>
       </div>
       <div class="item-div" v-if="!isLogin">
         <span class="iconfont item-div-icon">&#xe608;</span>
-        <router-link to="/index_home" class="router-link">说说</router-link>
+        <router-link to="/index_novel" class="router-link">说说</router-link>
       </div>
       <div class="item-div" v-if="!isLogin">
         <span class="iconfont item-div-icon">&#xe75b;</span>
-        <router-link to="/index_home" class="router-link">音乐</router-link>
+        <router-link to="/index_music" class="router-link">音乐</router-link>
       </div>
       <div class="item-div" v-if="!isLogin">
         <span class="iconfont item-div-icon">&#xe614;</span>
-        <router-link to="/index_home" class="router-link">我的</router-link>
+        <router-link to="/index_my_info" class="router-link">我的</router-link>
       </div>
       <div class="login-btn" @click="login" v-if="isLogin">登录</div>
       <div class="login-btn" @click="exit" v-if="!isLogin">退出</div>
@@ -141,6 +141,8 @@ const exit = (): void => {
 @import "@/assets/css/iconfont.css";
 .header {
   padding: 10px 0;
+  width: 1200px;
+  margin: 0 auto;
   background-color: #5f5a5a;
   display: flex;
   justify-content: space-between;

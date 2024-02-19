@@ -1,15 +1,17 @@
 <template>
   <div class="wrapper">
     <div class="navigation">
-      <NavigationVue></NavigationVue>
+      <headerVue></headerVue>
     </div>
-    <ContentVue class="content"></ContentVue>
+    <contentVue class="content"></contentVue>
+    <footerVue></footerVue>
   </div>
 </template>
 
 <script lang="ts" setup>
-import NavigationVue from "@/views/blog/NavigationVue.vue";
-import ContentVue from "@/views/blog/ContentVue.vue";
+import headerVue from "@/views/blog/headerVue.vue";
+import contentVue from "@/views/blog/contentVue.vue";
+import footerVue from "@/views/blog/footerVue.vue";
 </script>
 <style scoped>
 .wrapper {
@@ -27,5 +29,6 @@ import ContentVue from "@/views/blog/ContentVue.vue";
 .content {
   flex: 1;
   margin-top: 52px;
+  min-height: 1800px;
 }
 </style>

@@ -8,7 +8,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/index',
     name: 'Index',
-    component: () => import('@/views/blog/Index_view.vue'),
+    component: () => import('@/views/blog/index_view.vue'),
     children: [
       {
         path: '/index',
@@ -18,6 +18,26 @@ const routes: Array<RouteRecordRaw> = [
         path: "/index_home",
         name: "index_home",
         component: () => import('@/views/blog/index_home.vue'),
+      },
+      {
+        path: "/index_novel",
+        name: "index_novel",
+        component: () => import('@/views/blog/index_novel.vue'),
+      },
+      {
+        path: "/index_music",
+        name: "index_music",
+        component: () => import('@/views/blog/index_music.vue'),
+      },
+      {
+        path: "/index_class",
+        name: "index_class",
+        component: () => import('@/views/blog/index_class.vue'),
+      },
+      {
+        path: "/index_my_info",
+        name: "index_my_info",
+        component: () => import('@/views/blog/index_my_info.vue'),
       },
     ]
   }
