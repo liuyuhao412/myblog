@@ -2,11 +2,12 @@ import { createStore } from 'vuex';
 
 export default createStore({
     state: {
-        isLogin: false,
+        isLogin: JSON.parse(localStorage.getItem('isLogin') || 'false'),
     },
     mutations: {
         setLogin(state, status: boolean) {
             state.isLogin = status;
+            localStorage.setItem('isLogin', JSON.stringify(status));
         },
     },
     actions: {

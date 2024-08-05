@@ -5,11 +5,16 @@
             <Sidebar />
             <el-main>
                 <div class="content">
-                    <div class="categories-list">
+                    <!-- 登录状态显示用户内容 -->
+                    <div v-if="isLogin" class="categories-list">
                         <div v-for="category in categories" :key="category.id" class="category-item">
                             <a class="category-name">{{ category.name }}</a>
                             <span class="category-count">({{ category.articleCount }})</span>
                         </div>
+                    </div>
+                    <!-- 未登录状态显示提示信息 -->
+                    <div v-else class="content-message">
+                        <p>请登录以查看分类内容。</p>
                     </div>
                 </div>
             </el-main>
@@ -22,8 +27,12 @@
 import Header from '@/components/myBlog/headerView.vue';
 import Sidebar from '@/components/myBlog/siderView.vue';
 import Footer from '@/components/myBlog/footerView.vue';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
 import { CategoryItem } from '@/types';
+
+const store = useStore();
+const isLogin = computed(() => store.getters.isLogin);
 
 const categories = ref<CategoryItem[]>([
     { id: 1, name: '技术', articleCount: 10 },
@@ -97,5 +106,13 @@ const categories = ref<CategoryItem[]>([
 .category-count {
     font-size: 1rem;
     color: #666;
+}
+
+.content-message {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 </style>

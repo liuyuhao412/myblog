@@ -5,11 +5,17 @@
             <Sidebar />
             <el-main>
                 <div class="content">
-                    <div class="content-grid">
-                        <el-card v-for="item in contentItems" :key="item.id" class="content-card">
+                    <!-- 登录状态显示用户内容 -->
+                    <div v-if="isLogin" class="content-grid">
+                        <el-card v-for="item in contentItems" :key="item.id" class="content-card"
+                            @click="navigateToDetail(item.id)">
                             <h3 class="card-title">{{ item.title }}</h3>
                             <p class="card-description">{{ item.description }}</p>
                         </el-card>
+                    </div>
+                    <!-- 未登录状态显示提示信息 -->
+                    <div v-else class="content-message">
+                        <p>请登录以查看内容。</p>
                     </div>
                 </div>
             </el-main>
@@ -22,9 +28,15 @@
 import Header from '@/components/myBlog/headerView.vue';
 import Sidebar from '@/components/myBlog/siderView.vue';
 import Footer from '@/components/myBlog/footerView.vue';
-import { ref } from 'vue';
-
+import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 import { ContentItem } from '@/types';
+
+const store = useStore();
+const router = useRouter();
+
+const isLogin = computed(() => store.getters.isLogin);
 
 const contentItems = ref<ContentItem[]>([
     { id: 1, title: '文章标题一', description: '这是文章一的简要描述。' },
@@ -32,6 +44,10 @@ const contentItems = ref<ContentItem[]>([
     { id: 3, title: '文章标题三', description: '这是文章三的简要描述。' },
     { id: 4, title: '文章标题4', description: '这是文章4的简要描述。' },
 ]);
+
+const navigateToDetail = (id: number) => {
+    router.push({ name: 'ArticleDetail', params: { id } });
+};
 
 </script>
 <style scoped>
@@ -42,7 +58,6 @@ const contentItems = ref<ContentItem[]>([
     background-color: #fff;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     border-radius: 15px;
-
 }
 
 .main-container {
@@ -85,11 +100,21 @@ const contentItems = ref<ContentItem[]>([
 .content {
     padding: 20px;
     background-color: #f9f9f9;
-    border-radius: 12px;
+    border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     flex-grow: 1;
     margin-left: 10px;
     font-size: 1.1rem;
     line-height: 1.8;
+    display: flex;
+    justify-content: center;
+}
+
+.content-message {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 </style>

@@ -31,6 +31,18 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/myBlog/base/registerView.vue')
   },
   {
+    path: '/article/:id',
+    name: 'ArticleDetail',
+    component: () => import('@/views/myBlog/function/articleDetail.vue'),
+    props: true
+  },
+  {
+    path: '/article/edit/:id?',
+    name: 'ArticleEdit',
+    component: () => import('@/views/myBlog/function/articleEdit.vue'),
+    props: true
+  },
+  {
     path: '/:catchAll(.*)',
     name: '404',
     component: () => import('@/views/page404View.vue')

@@ -1,7 +1,8 @@
 <template>
   <el-aside width="300px">
     <div class="sidebar">
-      <div class="profile">
+      <!-- 登录状态 -->
+      <div v-if="isLogin" class="profile">
         <img :src="userInfo.avatar" alt="头像" class="profile-avatar" />
         <h3>{{ userInfo.username }}</h3>
         <p class="profile-info">{{ userInfo.info }}</p>
@@ -15,22 +16,53 @@
             <p>标签</p>
           </div>
         </div>
-      </div>
-      <div class="tags">
-        <h3>标签云</h3>
-        <div class="tag-list">
-          <el-tag v-for="tag in tags" :key="tag" class="tag-item">
-            {{ tag }}
-          </el-tag>
+        <div class="tags">
+          <h3>标签云</h3>
+          <div class="tag-list">
+            <el-tag v-for="userTag in userTags" :key="userTag" class="tag-item">
+              {{ userTag }}
+            </el-tag>
+          </div>
         </div>
       </div>
+
+      <!-- 未登录状态 -->
+      <div v-else class="profile">
+        <img src="https://via.placeholder.com/100" alt="头像" class="profile-avatar" />
+        <h3>请登录</h3>
+        <p class="profile-info">欢迎来到博客！请登录以查看个人信息。</p>
+        <div class="stats">
+          <div class="stat-item">
+            <span>0</span>
+            <p>日志</p>
+          </div>
+          <div class="stat-item">
+            <span>0</span>
+            <p>标签</p>
+          </div>
+        </div>
+        <div class="tags">
+          <h3>标签云</h3>
+          <div class="tag-list">
+            <el-tag v-for="defaultTag in defaultTags" :key="defaultTag" class="tag-item">
+              {{ defaultTag }}
+            </el-tag>
+          </div>
+        </div>
+      </div>
+
+
     </div>
   </el-aside>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { UserInfo } from '@/types';
+import { useStore } from 'vuex';
+
+const store = useStore();
+const isLogin = computed(() => store.getters.isLogin);
 
 const userInfo = ref<UserInfo>({
   username: '用户名',
@@ -41,11 +73,15 @@ const userInfo = ref<UserInfo>({
   tagCount: 5,
 });
 
-const tags = [
+const userTags = ref<string[]>([
   '标签一', '标签二', '标签三', '标签四', '标签五',
   '标签六', '标签七', '标签八', '标签九', '标签十',
   '标签11', '标签12', '标签13', '标签14', '标签15',
-];
+]);
+
+const defaultTags = ref<string[]>([
+  '默认一', '默认二', '默认三', '默认四', '默认五'
+]);
 </script>
 
 <style scoped>

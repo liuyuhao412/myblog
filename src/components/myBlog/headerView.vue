@@ -3,7 +3,8 @@
     <h1>myBlog</h1>
     <el-menu mode="horizontal" class="menu" :default-active="activeIndex" @select="menuSelect">
       <el-menu-item index="/">首页</el-menu-item>
-      <el-menu-item index="/categories">分类</el-menu-item>
+      <el-menu-item v-if="isLogIn" index="/categories">分类</el-menu-item>
+      <el-menu-item v-if="isLogIn" index="/article/edit">写文章</el-menu-item>
       <el-menu-item index="/about">关于我</el-menu-item>
     </el-menu>
     <el-input class="search-input" placeholder="请输入搜索内容" clearable></el-input>

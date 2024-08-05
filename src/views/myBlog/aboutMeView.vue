@@ -4,10 +4,14 @@
 
         <el-container class="main-container">
             <el-main>
-                <div class="content">
+                <div v-if="isLogin">
                     <h2>关于我</h2>
                     <p>你好！我是一名热爱编程和技术的博客作者。在这里，我会分享我的技术文章、编程经验以及一些个人的生活感悟。</p>
                     <p>希望我的博客能够对你有所帮助。如果你对我发布的内容有任何问题或者建议，欢迎通过评论或者邮件联系我！</p>
+                </div>
+                <div v-else>
+                    <h2>关于我</h2>
+                    <p>你好！欢迎访问我的博客。如果你想查看更多内容，请登录。</p>
                 </div>
             </el-main>
         </el-container>
@@ -17,8 +21,12 @@
 
 <script setup lang="ts">
 import Header from '@/components/myBlog/headerView.vue';
-import Sidebar from '@/components/myBlog/siderView.vue';
 import Footer from '@/components/myBlog/footerView.vue';
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+
+const store = useStore();
+const isLogin = computed(() => store.getters.isLogin);
 </script>
 
 <style scoped>
