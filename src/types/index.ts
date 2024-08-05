@@ -15,6 +15,8 @@ export interface UserInfo {
     avatar: string;
     email: string;
     info: string;
+    articleCount: number;
+    tagCount: number;
 }
 
 export interface ContentItem {
@@ -23,8 +25,8 @@ export interface ContentItem {
     description: string;
 }
 
-export interface CategoryItem {
+export interface CategoryItem{
     id: number;
     name: string;
-    description: string;
+    articleCount: number;
 }

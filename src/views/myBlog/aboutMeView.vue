@@ -1,15 +1,6 @@
 <template>
     <div class="about-layout">
-        <el-header class="header">
-            <h1>myBlog</h1>
-            <el-menu mode="horizontal" class="menu" :default-active="activeIndex" @select="menuSelect">
-                <el-menu-item index="/">首页</el-menu-item>
-                <el-menu-item index="/categories">分类</el-menu-item>
-                <el-menu-item index="/about">关于我</el-menu-item>
-            </el-menu>
-            <el-input class="search-input" placeholder="请输入搜索内容" clearable></el-input>
-            <el-button type="primary" @click="handleLogin">{{ isLogIn ? '退出' : '登录' }}</el-button>
-        </el-header>
+        <Header />
 
         <el-container class="main-container">
             <el-main>
@@ -20,37 +11,14 @@
                 </div>
             </el-main>
         </el-container>
-
-        <el-footer class="footer">
-            <p>&copy; 2024 个人博客</p>
-            <p>Github: liuyuhao412</p>
-        </el-footer>
+        <Footer />
     </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, Ref } from 'vue';
-import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
-
-const store = useStore();
-const router = useRouter();
-
-const activeIndex = ref<string>('/about');
-const isLogIn: Ref<boolean> = computed(() => store.getters.isLogin);
-
-const menuSelect = (index: string) => {
-    activeIndex.value = index;
-    router.push(index).catch(err => console.error(err));
-}
-
-const handleLogin = () => {
-    if (isLogIn.value) {
-        store.dispatch('logout');
-    } else {
-        router.push('/login_view');
-    }
-}
+import Header from '@/components/myBlog/headerView.vue';
+import Sidebar from '@/components/myBlog/siderView.vue';
+import Footer from '@/components/myBlog/footerView.vue';
 </script>
 
 <style scoped>
@@ -63,52 +31,10 @@ const handleLogin = () => {
     border-radius: 10px;
 }
 
-.header {
-    background: linear-gradient(90deg, #4169E1, #1E90FF);
-    color: #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    border-radius: 8px 8px 0 0;
-}
-
-.header h1 {
-    font-size: 2rem;
-    font-weight: bold;
-    margin: 0;
-    transition: color 0.3s;
-}
-
-.header h1:hover {
-    color: #dfe6ff;
-}
-
-.menu {
-    flex-grow: 1;
-    margin-left: 40px;
-    font-size: 1.5rem;
-}
-
-.el-menu-item {
-    transition: color 0.3s;
-}
-
-.el-menu-item:hover {
-    color: #dfe6ff;
-}
-
-.search-input {
-    max-width: 300px;
-    margin: 0 2em;
-}
-
 .main-container {
     display: flex;
     margin-top: 20px;
 }
-
-
 
 .content {
     padding: 20px;
@@ -123,19 +49,5 @@ const handleLogin = () => {
     font-size: 2rem;
     margin-bottom: 20px;
     color: #333;
-}
-
-.footer {
-    text-align: center;
-    padding: 10px;
-    background: linear-gradient(90deg, #1E90FF, #4169E1);
-    color: #fff;
-    margin-top: 20px;
-    border-radius: 0 0 8px 8px;
-    font-size: 1rem;
-}
-
-.footer p {
-    margin: 0;
 }
 </style>
