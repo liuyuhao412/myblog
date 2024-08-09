@@ -8,3 +8,8 @@ export const loginUser = (username: string, password: string) => {
 export const registerUser = (username: string, password: string, confirmPassword: string) => {
     return instance.post('/register', { username, password, confirmPassword });
 };
+
+export const exitBlog = () => {
+    return instance.post('/logout');
+};
+

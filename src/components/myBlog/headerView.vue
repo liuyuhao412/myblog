@@ -16,6 +16,8 @@
 import { computed, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter, useRoute } from 'vue-router';
+import { exitBlog } from '@/api/auth';
+import { ElMessage } from 'element-plus';
 
 const store = useStore();
 const route = useRoute();
@@ -29,9 +31,17 @@ const menuSelect = (index: string) => {
   router.push(index);
 };
 
-const handleLogin = () => {
+const handleLogin = async () => {
   if (isLogIn.value) {
-    store.dispatch('logout');
+    const response = await exitBlog();
+    if (response.status === 200) {
+      ElMessage({
+        message: response.data.message,
+        type: 'success',
+        duration: 1000
+      })
+      await store.dispatch('logout');
+    }
   } else {
     router.push('/login_view');
   }

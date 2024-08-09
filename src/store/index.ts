@@ -1,4 +1,5 @@
 import { createStore } from 'vuex';
+import instance from "@/utils/http"
 
 export default createStore({
     state: {
@@ -11,14 +12,34 @@ export default createStore({
         },
     },
     actions: {
-        login({ commit }) {
-            // 在这里可以执行登录逻辑，如调用 API
+        async login({ commit }) {
             commit('setLogin', true);
-
         },
         logout({ commit }) {
             commit('setLogin', false);
+            localStorage.removeItem('token');
         },
+        async checkAuth({ commit }) {
+            const token = localStorage.getItem('token');
+            if (token) {
+                try {
+                    const response = await instance.get('/protected_content', {
+                        headers: { 'Authorization': token }
+                    });
+                    if (response.status === 200) {
+                        commit('setLogin', true);
+                    } else {
+                        commit('setLogin', false);
+                        localStorage.removeItem('token');
+                    }
+                } catch (error) {
+                    commit('setLogin', false);
+                    localStorage.removeItem('token');
+                }
+            } else {
+                commit('setLogin', false);
+            }
+        }
     },
     getters: {
         isLogin: (state) => state.isLogin,
