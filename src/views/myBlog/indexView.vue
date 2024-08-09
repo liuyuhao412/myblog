@@ -31,7 +31,7 @@ import Footer from '@/components/myBlog/footerView.vue';
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
-import { ContentItem } from '@/types';
+import { ContentItem } from "@/utils/type"
 
 const store = useStore();
 const router = useRouter();

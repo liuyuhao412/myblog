@@ -30,11 +30,12 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { registerUser } from '@/types'
+import { ElMessage } from 'element-plus';
+import { registerUser } from '@/api/auth';
 
 const router = useRouter();
 
-const registerForm = ref < registerUser > ({
+const registerForm = ref({
     username: '',
     password: '',
     confirmPassword: ''
@@ -44,9 +45,30 @@ const toLogin = () => {
     router.push("/login_view");
 };
 
-const register = () => {
-    router.push("/login_view");
-};
+const register = async () => {
+    try {
+        const response = await registerUser(registerForm.value.username, registerForm.value.password, registerForm.value.confirmPassword);
+        if (response.status == 200) {
+            ElMessage({
+                message: response.data.message,
+                type: 'success',
+                duration: 2000
+            })
+            setTimeout(() => {
+                router.push('/login_view');
+            }, 2000);
+        } else {
+            ElMessage.error(response.data.message || '注册失败。');
+        }
+    } catch (error) {
+        if (error.response) {
+            const errorMessage = error.response.data.message || '注册失败。请稍后再试。';
+            ElMessage.error(errorMessage);
+        } else {
+            ElMessage.error('注册失败。请稍后再试。');
+        }
+    }
+}
 </script>
 
 <style scoped>

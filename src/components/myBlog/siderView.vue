@@ -58,7 +58,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { UserInfo } from '@/types';
+import { UserInfo } from "@/utils/type";
 import { useStore } from 'vuex';
 
 const store = useStore();

@@ -1,4 +1,3 @@
-// src/types/index.ts
 export interface LoginUser {
     username: string;
     password: string;

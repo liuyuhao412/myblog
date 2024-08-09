@@ -29,7 +29,7 @@ import Sidebar from '@/components/myBlog/siderView.vue';
 import Footer from '@/components/myBlog/footerView.vue';
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
-import { CategoryItem } from '@/types';
+import { CategoryItem } from "@/utils/type"
 
 const store = useStore();
 const isLogin = computed(() => store.getters.isLogin);

@@ -19,6 +19,7 @@
                 <el-form-item>
                     <el-button type="primary" @click="login">登录</el-button>
                 </el-form-item>
+
             </el-form>
         </div>
     </div>
@@ -29,12 +30,13 @@
 import { ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
-import { loginUser } from '@/types'
+import { loginUser } from '@/api/auth';
+import { ElMessage } from 'element-plus';
+
 const store = useStore();
 const router = useRouter();
 
-
-const loginForm = ref < loginUser > ({
+const loginForm = ref({
     username: '',
     password: '',
 });
@@ -43,9 +45,33 @@ const toRegister = () => {
     router.push("/register_view");
 };
 
-const login = () => {
-    store.dispatch('login');
-    router.push("/index");
+const login = async () => {
+    try {
+        const response = await loginUser(loginForm.value.username, loginForm.value.password);
+        if (response.status == 200) {
+            localStorage.setItem('token', response.data.token);
+            store.dispatch('login');
+            ElMessage({
+                message: response.data.message,
+                type: 'success',
+                duration: 1000
+            })
+            setTimeout(() => {
+                router.push('/index');
+            }, 1000);
+        } else {
+            ElMessage.error(response.data.message || '登录失败。');
+        }
+    } catch (error) {
+        if (error.response) {
+            // 服务器返回了响应，但状态码是错误的
+            const errorMessage = error.response.data.message || '登录失败。请检查您的账号或密码。';
+            ElMessage.error(errorMessage);
+        } else {
+            // 网络错误或其他问题
+            ElMessage.error('登录失败。请稍后再试。');
+        }
+    }
 };
 
 </script>
