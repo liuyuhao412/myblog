@@ -114,6 +114,13 @@ const submitForm = async () => {
         router.push("/index");
       }, 1000);
     }
+    else{
+      ElMessage({
+        message: response.data.message,
+        type: "error",
+        duration: 1000,
+      });
+    }
   } catch (error) {
     console.error("获取用户信息失败");
   }
