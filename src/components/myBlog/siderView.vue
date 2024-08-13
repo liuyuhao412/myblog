@@ -3,7 +3,7 @@
     <div class="sidebar">
       <!-- 登录状态 -->
       <div v-if="isLogin" class="profile">
-        <img :src="userInfo.avatar" alt="头像" class="profile-avatar" />
+        <img :src="'http://localhost:5000' + userInfo.avatar" alt="头像" class="profile-avatar" />
         <h3>{{ userInfo.username }}</h3>
         <p class="profile-info">{{ userInfo.info }}</p>
         <div class="stats">
@@ -16,6 +16,8 @@
             <p>标签</p>
           </div>
         </div>
+        <el-button type="primary" class="edit-btn" @click="editProfile">编辑资料</el-button>
+
         <div class="tags">
           <h3>标签云</h3>
           <div class="tag-list">
@@ -57,11 +59,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { UserInfo } from "@/utils/type";
 import { useStore } from 'vuex';
+import { get_user_profile } from '@/api/profile';
+import { useRouter } from 'vue-router';
 
 const store = useStore();
+const router = useRouter();
 const isLogin = computed(() => store.getters.isLogin);
 
 const userInfo = ref<UserInfo>({
@@ -69,8 +74,8 @@ const userInfo = ref<UserInfo>({
   avatar: 'https://via.placeholder.com/100',
   email: 'user@example.com',
   info: '这是一段个人简介。',
-  articleCount: 10,
-  tagCount: 5,
+  articleCount: 0,
+  tagCount: 0,
 });
 
 const userTags = ref<string[]>([
@@ -82,6 +87,25 @@ const userTags = ref<string[]>([
 const defaultTags = ref<string[]>([
   '默认一', '默认二', '默认三', '默认四', '默认五'
 ]);
+
+onMounted(async () => {
+  if (isLogin.value) {
+    try {
+      const response = await get_user_profile();
+      if (response.status == 200) {
+        userInfo.value = response.data.data
+      }
+    } catch (error) {
+      console.error('获取用户信息失败');
+    }
+  }
+});
+
+const editProfile = () => {
+  // 跳转到编辑个人资料页面
+  console.log('编辑个人资料');
+  router.push('/edit-profile');
+};
 </script>
 
 <style scoped>
@@ -151,6 +175,10 @@ const defaultTags = ref<string[]>([
   margin: 0;
   font-size: 0.9rem;
   color: #aaa;
+}
+
+.edit-btn {
+  margin-top: 10px;
 }
 
 .tags {

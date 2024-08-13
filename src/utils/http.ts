@@ -11,8 +11,11 @@ const instance: AxiosInstance = axios.create({
 
 instance.interceptors.request.use(
     (config) => {
-        // 这里可以添加认证 token 或者其他请求前的处理
-        // 例如：config.headers['Authorization'] = `Bearer ${token}`;
+        const token = localStorage.getItem('token');
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+            
+        }
         return config;
     },
     (error) => {

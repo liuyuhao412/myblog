@@ -13,3 +13,5 @@ export const exitBlog = () => {
     return instance.post('/logout');
 };
 
+
+

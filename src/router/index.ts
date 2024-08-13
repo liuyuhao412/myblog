@@ -28,6 +28,12 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresAuth: false }
   },
   {
+    path: '/edit-profile',
+    name: 'edit-profile',
+    component: () => import('@/views/myBlog/function/editProfile.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/login_view',
     name: 'login_view',
     component: () => import('@/views/myBlog/base/loginView.vue'),
@@ -66,35 +72,36 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach((to, from, next) => {
   const store = useStore();
   const isLogin = store.getters.isLogin;
   const requiresAuth = to.meta.requiresAuth;
 
   if (requiresAuth) {
-      if (!isLogin) {
-          next('/login_view');
-          return;
+
+    if (!isLogin) {
+      next('/login_view');
+      return;
+    }
+    try {
+      // 验证 Token 是否有效
+      store.dispatch('checkAuth');
+      if (store.getters.isLogin) {
+        next();
+      } else {
+        ElMessage.error('Token 无效或已过期，请重新登录');
+        localStorage.removeItem('token');
+        store.dispatch('logout');
+        next('/login_view');
       }
-      try {
-          // 验证 Token 是否有效
-          await store.dispatch('checkAuth');
-          if (store.getters.isLogin) {
-              next();
-          } else {
-              ElMessage.error('Token 无效或已过期，请重新登录');
-              localStorage.removeItem('token');
-              store.dispatch('logout'); 
-              next('/login_view');
-          }
-      } catch (error) {
-          ElMessage.error('验证失败，请稍后再试');
-          localStorage.removeItem('token');
-          store.dispatch('logout'); 
-          next('/login_view');
-      }
+    } catch (error) {
+      ElMessage.error('验证失败，请稍后再试');
+      localStorage.removeItem('token');
+      store.dispatch('logout');
+      next('/login_view');
+    }
   } else {
-      next();
+    next();
   }
 });
 
