@@ -7,18 +7,15 @@
         <div class="content">
           <!-- 登录状态显示用户内容 -->
           <div v-if="isLogin" class="content-grid">
-            <el-card
-              v-for="item in contentItems"
-              :key="item.id"
-              class="content-card"
-              @click="navigateToDetail(item.id)"
-            >
+            <el-card v-for="item in contentItems" :key="item.id" class="content-card">
               <h3 class="card-title">{{ item.title }}</h3>
               <el-button
                 class="delete-btn"
-                type="danger"
-                size="small"
-                @click="deleteArticle(item.id)"
+                type="primary"
+                @click="navigateToDetail(item.id)"
+                >详情查看</el-button
+              >
+              <el-button class="delete-btn" type="danger" @click="deleteArticle(item.id)"
                 >删除</el-button
               >
             </el-card>
@@ -41,7 +38,6 @@ import Footer from "@/components/myBlog/footerView.vue";
 import { ref, computed, onMounted } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-import { ContentItem } from "@/utils/type";
 import { getArticles, delArticle } from "@/api/article";
 
 const store = useStore();
@@ -49,7 +45,7 @@ const router = useRouter();
 
 const isLogin = computed(() => store.getters.isLogin);
 
-const contentItems = ref<ContentItem[]>();
+const contentItems = ref();
 
 const get_articles = async () => {
   const response = await getArticles();
@@ -60,8 +56,11 @@ const get_articles = async () => {
 
 const deleteArticle = async (id: number) => {
   const response = await delArticle(id);
-  router.push({ name: "index" });
+  if (response.status == 200) {
+    get_articles();
+  }
 };
+
 onMounted(async () => {
   get_articles();
 });

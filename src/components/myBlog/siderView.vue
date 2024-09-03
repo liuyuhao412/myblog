@@ -15,23 +15,10 @@
             <span>{{ userInfo.articleCount }}</span>
             <p>日志</p>
           </div>
-          <div class="stat-item">
-            <span>{{ userInfo.tagCount }}</span>
-            <p>标签</p>
-          </div>
         </div>
         <el-button type="primary" class="edit-btn" @click="editProfile"
           >编辑资料</el-button
         >
-
-        <div class="tags">
-          <h3>标签云</h3>
-          <div class="tag-list">
-            <el-tag v-for="userTag in userTags" :key="userTag" class="tag-item">
-              {{ userTag }}
-            </el-tag>
-          </div>
-        </div>
       </div>
 
       <!-- 未登录状态 -->
@@ -47,14 +34,6 @@
           <div class="stat-item">
             <span>0</span>
             <p>标签</p>
-          </div>
-        </div>
-        <div class="tags">
-          <h3>标签云</h3>
-          <div class="tag-list">
-            <el-tag v-for="defaultTag in defaultTags" :key="defaultTag" class="tag-item">
-              {{ defaultTag }}
-            </el-tag>
           </div>
         </div>
       </div>
@@ -79,28 +58,7 @@ const userInfo = ref<UserInfo>({
   email: "user@example.com",
   info: "这是一段个人简介。",
   articleCount: 0,
-  tagCount: 0,
 });
-
-const userTags = ref<string[]>([
-  "标签一",
-  "标签二",
-  "标签三",
-  "标签四",
-  "标签五",
-  "标签六",
-  "标签七",
-  "标签八",
-  "标签九",
-  "标签十",
-  "标签11",
-  "标签12",
-  "标签13",
-  "标签14",
-  "标签15",
-]);
-
-const defaultTags = ref<string[]>(["默认一", "默认二", "默认三", "默认四", "默认五"]);
 
 onMounted(async () => {
   if (isLogin.value) {

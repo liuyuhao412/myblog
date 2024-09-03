@@ -1,7 +1,12 @@
 <template>
   <el-footer class="footer">
     <p>&copy; 2024 个人博客</p>
-    <p>Github: <a href="https://github.com/liuyuhao412" target="_blank" class="footer-link">liuyuhao412</a></p>
+    <p>
+      Github:
+      <a href="https://github.com/liuyuhao412" target="_blank" class="footer-link"
+        >liuyuhao412</a
+      >
+    </p>
   </el-footer>
 </template>
 
@@ -13,7 +18,7 @@
   text-align: center;
   border-radius: 0 0 12px 12px;
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-  background: linear-gradient(90deg, #1E90FF, #4169E1);
+  background: linear-gradient(90deg, #1e90ff, #4169e1);
 }
 
 .footer p {

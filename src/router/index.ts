@@ -16,12 +16,6 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresAuth: false }
   },
   {
-    path: '/categories',
-    name: 'categories',
-    component: () => import('@/views/myBlog/categoriesView.vue'),
-    meta: { requiresAuth: false }
-  },
-  {
     path: '/about',
     name: 'about',
     component: () => import('@/views/myBlog/aboutMeView.vue'),

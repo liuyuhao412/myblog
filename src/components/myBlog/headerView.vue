@@ -1,23 +1,29 @@
 <template>
   <el-header class="header">
     <h1>myBlog</h1>
-    <el-menu mode="horizontal" class="menu" :default-active="activeIndex" @select="menuSelect">
+    <el-menu
+      mode="horizontal"
+      class="menu"
+      :default-active="activeIndex"
+      @select="menuSelect"
+    >
       <el-menu-item index="/">首页</el-menu-item>
-      <el-menu-item v-if="isLogIn" index="/categories">分类</el-menu-item>
       <el-menu-item v-if="isLogIn" index="/article/edit">写文章</el-menu-item>
       <el-menu-item index="/about">关于我</el-menu-item>
     </el-menu>
     <el-input class="search-input" placeholder="请输入搜索内容" clearable></el-input>
-    <el-button type="primary" @click="handleLogin">{{ isLogIn ? '退出' : '登录' }}</el-button>
+    <el-button type="primary" @click="handleLogin">{{
+      isLogIn ? "退出" : "登录"
+    }}</el-button>
   </el-header>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
-import { useStore } from 'vuex';
-import { useRouter, useRoute } from 'vue-router';
-import { exitBlog } from '@/api/auth';
-import { ElMessage } from 'element-plus';
+import { computed, ref, watch } from "vue";
+import { useStore } from "vuex";
+import { useRouter, useRoute } from "vue-router";
+import { exitBlog } from "@/api/auth";
+import { ElMessage } from "element-plus";
 
 const store = useStore();
 const route = useRoute();
@@ -37,24 +43,27 @@ const handleLogin = async () => {
     if (response.status === 200) {
       ElMessage({
         message: response.data.message,
-        type: 'success',
-        duration: 1000
-      })
-      await store.dispatch('logout');
+        type: "success",
+        duration: 1000,
+      });
+      await store.dispatch("logout");
     }
   } else {
-    router.push('/login_view');
+    router.push("/login_view");
   }
 };
 
-watch(() => route.path, (newPath) => {
-  activeIndex.value = newPath;
-});
+watch(
+  () => route.path,
+  (newPath) => {
+    activeIndex.value = newPath;
+  }
+);
 </script>
 
 <style scoped>
 .header {
-  background: linear-gradient(90deg, #4169E1, #1E90FF);
+  background: linear-gradient(90deg, #4169e1, #1e90ff);
   color: #fff;
   display: flex;
   justify-content: space-between;
