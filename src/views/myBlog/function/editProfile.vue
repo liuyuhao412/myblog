@@ -13,6 +13,9 @@
                 readonly
               />
             </el-form-item>
+            <el-form-item label="姓名">
+              <el-input v-model="Updateform.name" placeholder="请输入姓名" />
+            </el-form-item>
             <el-form-item label="邮箱">
               <el-input v-model="Updateform.email" placeholder="请输入邮箱" />
             </el-form-item>
@@ -64,6 +67,7 @@ const isLogin = computed(() => store.getters.isLogin);
 
 const Updateform = ref({
   username: "",
+  name: "",
   email: "",
   avatar: "",
   info: "",
@@ -77,6 +81,7 @@ onMounted(async () => {
       if (response.status === 200) {
         Updateform.value = {
           username: data.username,
+          name: data.name,
           email: data.email,
           avatar: data.avatar,
           info: data.info,
@@ -100,6 +105,7 @@ const submitForm = async () => {
   try {
     const response = await update_profile(
       Updateform.value.username,
+      Updateform.value.name,
       Updateform.value.email,
       Updateform.value.avatar,
       Updateform.value.info
@@ -113,8 +119,7 @@ const submitForm = async () => {
       setTimeout(() => {
         router.push("/index");
       }, 1000);
-    }
-    else{
+    } else {
       ElMessage({
         message: response.data.message,
         type: "error",

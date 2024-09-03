@@ -23,7 +23,7 @@ export default createStore({
             const token = localStorage.getItem('token');
             if (token) {
                 try {
-                    const response = await instance.get('/protected_content');
+                    const response = await instance.get('/protected-content');
                     if (response.status == 200) {
                         commit('setLogin', true);
                     } else {

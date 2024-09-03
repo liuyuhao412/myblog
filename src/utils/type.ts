@@ -21,7 +21,6 @@ export interface UserInfo {
 export interface ContentItem {
     id: number;
     title: string;
-    description: string;
 }
 
 export interface CategoryItem{
